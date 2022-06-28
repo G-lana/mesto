@@ -1,0 +1,6 @@
+.place__item {
+    display: flex;
+    justify-content: space-between;
+    width: 246px;
+    margin-left: 21px;
+}

@@ -1,0 +1,6 @@
+.place__image {
+    border-radius: 10px 10px 0 0;
+    height: 282px;
+    width: 282px;
+    object-fit: cover;
+}
