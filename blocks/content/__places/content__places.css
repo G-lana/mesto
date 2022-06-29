@@ -6,3 +6,9 @@
     row-gap: 20px;
     justify-content: center;
 }
+
+@media screen and (max-width: 720px) {
+    .content__places {
+        margin: 0 auto 48px;
+       }
+}

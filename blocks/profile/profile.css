@@ -3,7 +3,7 @@
     max-width: 880px;
     justify-content: space-between;
 }
-@media screen and (max-width: 692px) {
+@media screen and (max-width: 720px) {
     .profile {
       flex-direction: column;
       align-items: center;
