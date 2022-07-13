@@ -36,86 +36,7 @@
           data-id="addCard"
         ></button>
       </section>
-      <section class="places content__places">
-        <article class="place places__place">
-          <img class="place__image" src="./images/Elbrus.png" alt="Эльбрус" />
-          <div class="place__item">
-            <h2 class="place__title">Гора Эльбрус</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-        <article class="place places__place">
-          <img
-            class="place__image"
-            src="./images/Balkaria.png"
-            alt="Кабардино-Балкария"
-          />
-          <div class="place__item">
-            <h2 class="place__title">Кабардино-Балкария</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-        <article class="place places__place">
-          <img class="place__image" src="./images/Dombai.png" alt="Домбай" />
-          <div class="place__item">
-            <h2 class="place__title">Домбай</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-        <article class="place places__place">
-          <img
-            class="place__image"
-            src="./images/Karachaevsk.png"
-            alt="Карачаевск"
-          />
-          <div class="place__item">
-            <h2 class="place__title">Карачаево-Черкессия</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-        <article class="place places__place">
-          <img class="place__image" src="./images/Field.png" alt="Ингушетия" />
-          <div class="place__item">
-            <h2 class="place__title">Ингушетия</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-        <article class="place places__place">
-          <img
-            class="place__image"
-            src="./images/Mountain.png"
-            alt="Дагестан"
-          />
-          <div class="place__item">
-            <h2 class="place__title">Дагестан</h2>
-            <button
-              class="place__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-          </div>
-        </article>
-      </section>
+      <section class="places content__places"></section>
     </main>
     <footer class="footer page__footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
@@ -124,6 +45,7 @@
       <div class="popup__container">
         <button
           class="popup__close"
+          id="close_editProfile"
           type="button"
           aria-label="Закрыть"
         ></button>
@@ -149,6 +71,7 @@
       <div class="popup__container">
         <button
           class="popup__close"
+          id="close_addCard"
           type="button"
           aria-label="Закрыть"
         ></button>
@@ -170,6 +93,38 @@
         </form>
       </div>
     </div>
+    <div class="popup" id="cardImage">
+      <div class="popup__container">
+        <figure class="popup__figure">
+          <img class="popup__image" src="" alt="" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+        <button
+          class="popup__close"
+          id="close_popup-image"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+    </div>
+    <template class="card-template">
+      <article class="place places__place">
+        <input type="image" class="place__image" src="" alt="" />
+        <button
+          class="place__delete"
+          type="button"
+          aria-label="Удалить"
+        ></button>
+        <div class="place__item">
+          <h2 class="place__title"></h2>
+          <button
+            class="place__like"
+            type="button"
+            aria-label="Нравится"
+          ></button>
+        </div>
+      </article>
+    </template>
     <script src="./script/index.js"></script>
   </body>
 </html>
