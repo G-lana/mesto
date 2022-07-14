@@ -26,11 +26,11 @@ const cardsList = document.querySelector('.places');
 
 
 
-function openPopup(popupElements) {
-  popupElements.classList.add('popup_opened');
+function openPopup(popupElement) {
+  popupElement.classList.add('popup_opened');
 };
-function closePopup(popupElements) {
-  popupElements.classList.remove('popup_opened');
+function closePopup(popupElement) {
+  popupElement.classList.remove('popup_opened');
 };
 
 popuProfileOpenButton.addEventListener('click', () => {openPopup(popupProfile); popupNameInputElement.value = profileName.textContent; popupJobInputElement.value = profileJob.textContent;});
@@ -78,15 +78,12 @@ function createCard(name, link) {
 
 
 
-function addEventListeners() {
-
   popupCardForm.addEventListener('submit', function(event) {
     event.preventDefault();
     createCard(popupCardTitleInput.value, popupCardLinkInput.value);
     event.target.reset();
     closePopup(popupCard);
   })
-}
 
 function createInitialCards() {
   const initialCards = [
@@ -119,5 +116,4 @@ function createInitialCards() {
   initialCards.forEach (element => createCard(element.name, element.link));
   };
   
-addEventListeners();
 createInitialCards()
