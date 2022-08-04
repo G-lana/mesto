@@ -1,12 +1,16 @@
 const editForm = {
   form: '.popup__form[name="editForm"]',
   input: '.popup__input',
+  errorInput: 'popup__input_type_error',
+  inputErrorText: 'popup__input-error_active',
   button: '.popup__button',
   buttonInvalid: 'popup__button_invalid',
 };
 const addForm = {
   form: '.popup__form[name="addForm"]',
   input: '.popup__input',
+  errorInput: 'popup__input_type_error',
+  inputErrorText: 'popup__input-error_active',
   button: '.popup__button',
   buttonInvalid: 'popup__button_invalid',
 };
@@ -22,25 +26,25 @@ function handleFormInput(event, config) {
   const form = event.currentTarget;
   const isValid = input.checkValidity();
   if (!isValid) {
-    showInputError(input);
+    showInputError(input, config);
   } else {
-    hideInputError(input);
+    hideInputError(input, config);
   }
   setSubmitButtonState(form, config);
 }
 
-function showInputError(input) {
+function showInputError(input, config) {
   const errorElement = input.nextElementSibling;
-  input.classList.add('popup__input_type_error');
+  input.classList.add(config.errorInput);
   errorElement.textContent = input.validationMessage;
-  errorElement.classList.add('popup__input-error_active');
+  errorElement.classList.add(config.inputErrorText);
 }
 
-function hideInputError(input) {
+function hideInputError(input, config) {
   const errorElement = input.nextElementSibling;
-  input.classList.remove('popup__input_type_error');
+  input.classList.remove(config.errorInput);
   errorElement.textContent = '';
-  errorElement.classList.remove('popup__input-error_active');
+  errorElement.classList.remove(config.inputErrorText);
 }
 
 function setSubmitButtonState(form, config) {
@@ -56,18 +60,17 @@ function setSubmitButtonState(form, config) {
 }
 
 function clearInputError(modalId) {
-  let inputSelector;
+  let config;
   if (modalId === 'editProfile') {
-    inputSelector = editForm.input;
+    config = editForm;
   } else if (modalId === 'addCard') {
-    inputSelector = addForm.input;
+    config = addForm;
   } else {
     return;
   }
-  const inputList = Array.from(document.querySelectorAll(inputSelector));
-
+  const inputList = Array.from(document.querySelectorAll(config.input));
   inputList.forEach((input) => {
-    hideInputError(input);
+    hideInputError(input, config);
   });
 }
 

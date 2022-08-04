@@ -56,15 +56,12 @@ popupProfileOpenButton.addEventListener('click', () => {
   openPopup(popupProfile);
 });
 popupCardOpenButton.addEventListener('click', () => {
-  popupCardTitleInput.value = '';
-  popupCardLinkInput.value = '';
   openPopup(popupCard);
 });
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => {
-    console.log(button.id);
     clearInputError(button.id);
     closePopup(popup);
   });
@@ -116,6 +113,9 @@ popupCardForm.addEventListener('submit', function (event) {
   event.preventDefault();
   createCard(popupCardTitleInput.value, popupCardLinkInput.value);
   event.target.reset();
+  const submitButton = document.querySelector('#addCardSubmit');
+  submitButton.classList.add('popup__button_invalid');
+  submitButton.setAttribute('disabled', true);
   closePopup(popupCard);
 });
 
