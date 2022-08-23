@@ -1,7 +1,8 @@
+import { Card } from './card.js';
+import { FormValidator } from './formValidator.js';
 const popupElements = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('#editProfile');
 const popupCard = document.querySelector('#addCard');
-const popupImage = document.querySelector('#cardImage');
 
 const formElements = document.querySelectorAll('.popup__container');
 const popupProfileForm = document.querySelector('#editProfileForm');
@@ -18,9 +19,6 @@ const popupJobInputElement = document.querySelector('.popup__input_type_job');
 
 const popupCardTitleInput = document.querySelector('.popup__input_type_title');
 const popupCardLinkInput = document.querySelector('.popup__input_type_link');
-
-const popupCardImage = document.querySelector('.popup__image');
-const popupCardImageCaption = document.querySelector('.popup__caption');
 
 const cardsList = document.querySelector('.places');
 
@@ -42,7 +40,6 @@ function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
   document.addEventListener('click', closePopupByOverlay);
-  clearInputError(popupElement.id);
 }
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
@@ -54,15 +51,16 @@ popupProfileOpenButton.addEventListener('click', () => {
   popupNameInputElement.value = profileName.textContent;
   popupJobInputElement.value = profileJob.textContent;
   openPopup(popupProfile);
+  profileFormValidation.handleStartingValidation();
 });
 popupCardOpenButton.addEventListener('click', () => {
   openPopup(popupCard);
+  CardFormValidation.handleStartingValidation();
 });
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => {
-    clearInputError(button.id);
     closePopup(popup);
   });
   popup.addEventListener('click', (evt) => closePopupByOverlay(evt));
@@ -76,78 +74,76 @@ function handleProfileFormSubmit(evt) {
 }
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
-function getCard(name, link) {
-  const cardElement = document
-    .querySelector('.card-template')
-    .content.querySelector('.place')
-    .cloneNode(true);
-  cardElement.querySelector('.place__title').textContent = name;
-  const cardImage = cardElement.querySelector('.place__image');
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardElement.querySelector('.place__delete').addEventListener('click', () => {
-    cardElement.remove();
-  });
-  cardElement
-    .querySelector('.place__like')
-    .addEventListener('click', (event) => {
-      event.target.classList.toggle('place__like_type_active');
-    });
-
-  cardImage.addEventListener('click', function () {
-    openPopup(popupImage);
-    popupCardImage.src = link;
-    popupCardImage.alt = name;
-    popupCardImageCaption.textContent = name;
-  });
-
-  return cardElement;
+function generateCard(item) {
+  const card = new Card(item, '.card-template');
+  return card.generateCard();
 }
 
-function createCard(name, link) {
-  const template = getCard(name, link);
-  cardsList.prepend(template);
-}
-
-popupCardForm.addEventListener('submit', function (event) {
-  event.preventDefault();
-  createCard(popupCardTitleInput.value, popupCardLinkInput.value);
-  event.target.reset();
-  const submitButton = document.querySelector('#addCardSubmit');
-  submitButton.classList.add('popup__button_invalid');
-  submitButton.setAttribute('disabled', true);
+function submitPopupCardForm(evt) {
+  evt.preventDefault();
+  cardsList.prepend(
+    generateCard({
+      title: popupCardTitleInput.value,
+      image: popupCardLinkInput.value,
+    })
+  );
+  // const submitButton = document.querySelector('#addCardSubmit');
+  // submitButton.classList.add('popup__button_invalid');
+  // submitButton.setAttribute('disabled', true);
   closePopup(popupCard);
+  evt.target.reset();
+}
+
+popupCardForm.addEventListener('submit', submitPopupCardForm);
+
+const items = [
+  {
+    title: 'Архыз',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+  },
+  {
+    title: 'Кабардино-Балкария',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
+  },
+  {
+    title: 'Домбай',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
+  },
+  {
+    title: 'Карачаево-Черкессия',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
+  },
+  {
+    title: 'Ингушетия',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
+  },
+  {
+    title: 'Дагестан',
+    image:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+  },
+];
+
+items.forEach((cardElement) => {
+  cardsList.prepend(generateCard(cardElement));
 });
 
-function createInitialCards() {
-  const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-    },
-    {
-      name: 'Кабардино-Балкария',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-    },
-    {
-      name: 'Домбай',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-    },
-    {
-      name: 'Карачаево-Черкессия',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-    },
-    {
-      name: 'Ингушетия',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-    },
-    {
-      name: 'Дагестан',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-    },
-  ];
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  errorInputClass: 'popup__input_type_error',
+  inputErrorTextClass: 'popup__input-error_active',
+  submitButtonSelector: '.popup__button',
+  buttonInvalidClass: 'popup__button_invalid',
+  buttonValidClass: 'popup__button_valid',
+};
 
-  initialCards.forEach((element) => createCard(element.name, element.link));
-}
-
-createInitialCards();
+const profileFormValidation = new FormValidator(config, popupProfileForm);
+const CardFormValidation = new FormValidator(config, popupCardForm);
+profileFormValidation.enableValidation();
+CardFormValidation.enableValidation();
