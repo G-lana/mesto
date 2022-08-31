@@ -60,6 +60,9 @@ export class FormValidator {
     formInput.classList.add(this._errorInputClass);
   }
   _hideInputError(formInput) {
+    this._errorElement = this._formElement.querySelector(
+      `.${formInput.name}-error`
+    );
     this._errorElement.textContent = '';
     this._errorElement.classList.remove(this._inputErrorTextClass);
     formInput.classList.remove(this._errorInputClass);

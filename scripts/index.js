@@ -1,8 +1,10 @@
 import { Card } from './card.js';
 import { FormValidator } from './formValidator.js';
+
 const popupElements = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('#editProfile');
 const popupCard = document.querySelector('#addCard');
+const popupImage = document.querySelector('#cardImage');
 
 const formElements = document.querySelectorAll('.popup__container');
 const popupProfileForm = document.querySelector('#editProfileForm');
@@ -19,6 +21,9 @@ const popupJobInputElement = document.querySelector('.popup__input_type_job');
 
 const popupCardTitleInput = document.querySelector('.popup__input_type_title');
 const popupCardLinkInput = document.querySelector('.popup__input_type_link');
+
+const popupCardImage = document.querySelector('.popup__image');
+const popupCardImageCaption = document.querySelector('.popup__caption');
 
 const cardsList = document.querySelector('.places');
 
@@ -66,6 +71,13 @@ closeButtons.forEach((button) => {
   popup.addEventListener('click', (evt) => closePopupByOverlay(evt));
 });
 
+function openPopupImage(title, image) {
+  popupCardImage.src = image;
+  popupCardImage.alt = title;
+  popupCardImageCaption.textContent = title;
+  openPopup(popupImage);
+}
+
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = popupNameInputElement.value;
@@ -75,7 +87,7 @@ function handleProfileFormSubmit(evt) {
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
 function generateCard(item) {
-  const card = new Card(item, '.card-template');
+  const card = new Card(item, '.card-template', openPopupImage);
   return card.generateCard();
 }
 
@@ -87,9 +99,6 @@ function submitPopupCardForm(evt) {
       image: popupCardLinkInput.value,
     })
   );
-  // const submitButton = document.querySelector('#addCardSubmit');
-  // submitButton.classList.add('popup__button_invalid');
-  // submitButton.setAttribute('disabled', true);
   closePopup(popupCard);
   evt.target.reset();
 }
