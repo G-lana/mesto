@@ -13,7 +13,7 @@ export class FormValidator {
     this._setEventListeners();
   }
 
-  handleStartingValidation() {
+  resetValidation() {
     this._setSubmitButtonState();
 
     this._inputsList.forEach((formInput) => {

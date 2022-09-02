@@ -53,11 +53,11 @@ popupProfileOpenButton.addEventListener('click', () => {
   popupNameInputElement.value = profileName.textContent;
   popupJobInputElement.value = profileJob.textContent;
   openPopup(popupProfile);
-  profileFormValidation.handleStartingValidation();
+  profileFormValidation.resetValidation();
 });
 popupCardOpenButton.addEventListener('click', () => {
   openPopup(popupCard);
-  cardFormValidation.handleStartingValidation();
+  cardFormValidation.resetValidation();
 });
 
 closeButtons.forEach((button) => {
