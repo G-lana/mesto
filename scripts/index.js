@@ -57,7 +57,7 @@ popupProfileOpenButton.addEventListener('click', () => {
 });
 popupCardOpenButton.addEventListener('click', () => {
   openPopup(popupCard);
-  CardFormValidation.handleStartingValidation();
+  cardFormValidation.handleStartingValidation();
 });
 
 closeButtons.forEach((button) => {
