@@ -36,20 +36,17 @@ function closeByEscape(evt) {
 
 function closePopupByOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
+    closePopup(evt.currentTarget);
   }
 }
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-  document.addEventListener('click', closePopupByOverlay);
 }
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
-  document.removeEventListener('click', closePopupByOverlay);
 }
 
 popupProfileOpenButton.addEventListener('click', () => {
@@ -68,7 +65,7 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => {
     closePopup(popup);
   });
-  popup.addEventListener('click', (evt) => closePopupByOverlay(evt));
+  popup.addEventListener('mousedown', (evt) => closePopupByOverlay(evt));
 });
 
 function openPopupImage(title, image) {
@@ -153,6 +150,6 @@ const config = {
 };
 
 const profileFormValidation = new FormValidator(config, popupProfileForm);
-const CardFormValidation = new FormValidator(config, popupCardForm);
+const cardFormValidation = new FormValidator(config, popupCardForm);
 profileFormValidation.enableValidation();
-CardFormValidation.enableValidation();
+cardFormValidation.enableValidation();

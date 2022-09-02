@@ -1,8 +1,3 @@
-const popupElement = document.querySelector('#cardImage');
-const popupImage = document.querySelector('.popup__image');
-const popupCloseButton = document.querySelector('#close_popup-image');
-const popupCaption = document.querySelector('.popup__caption');
-
 export class Card {
   constructor(data, templateSelector, openPopupImage) {
     this._title = data.title;
@@ -31,19 +26,6 @@ export class Card {
 
     return this._element;
   }
-
-  // _handleOpenPopup() {
-  //   popupImage.src = this._image;
-  //   popupImage.alt = this._title;
-  //   popupCaption.textContent = this._title;
-  //   popupElement.classList.add('popup_opened');
-  // }
-  // _handleClosePopup() {
-  //   popupImage.src = '';
-  //   popupImage.alt = '';
-  //   popupCaption.textContent = '';
-  //   popupElement.classList.remove('popup_opened');
-  // }
   _handleLikeCard() {
     this._likeButton.classList.toggle('place__like_type_active');
   }
