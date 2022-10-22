@@ -36,23 +36,23 @@ const cardSection = new Section(
 cardSection.renderItems(items);
 
 const userInfo = new UserInfo('.profile__title', '.profile__job');
-const editProfilePopup = new PopupWithForm('#editProfile', (inputsValue) => {
+const popupEditProfile = new PopupWithForm('#editProfile', (inputsValue) => {
   userInfo.setUserInfo(inputsValue.name, inputsValue.job);
 });
 
-const addCardPopup = new PopupWithForm('#addCard', (inputsValue) =>
+const popupAddCard = new PopupWithForm('#addCard', (inputsValue) =>
   cardSection.addItem(createCard(inputsValue))
 );
 
-const imagePopup = new PopupWithImage('#cardImage');
-imagePopup.setEventListeners();
+const popupWithImage = new PopupWithImage('#cardImage');
+popupWithImage.setEventListeners();
 
 function handleCardClick(title, image) {
-  imagePopup.open(title, image);
+  popupWithImage.open(title, image);
 }
 
 popupProfileOpenButton.addEventListener('click', () => {
-  editProfilePopup.open();
+  popupEditProfile.open();
   const data = userInfo.getUserInfo();
   popupNameInputElement.value = data.name;
   popupJobInputElement.value = data.job;
@@ -60,12 +60,12 @@ popupProfileOpenButton.addEventListener('click', () => {
 });
 
 popupCardOpenButton.addEventListener('click', () => {
-  addCardPopup.open();
+  popupAddCard.open();
   cardFormValidation.resetValidation();
 });
 
-addCardPopup.setEventListeners();
-editProfilePopup.setEventListeners();
+popupAddCard.setEventListeners();
+popupEditProfile.setEventListeners();
 
 const profileFormValidation = new FormValidator(config, popupProfileForm);
 const cardFormValidation = new FormValidator(config, popupCardForm);
