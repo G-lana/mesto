@@ -9,7 +9,7 @@
   align-items: center;
   border-radius: 50%;
 }
-.profile__edit:hover > .profile__avatar_edit-button {
+.profile__edit:hover > .profile__avatar_change-button {
     visibility: visible;
     opacity: .8;
 }
