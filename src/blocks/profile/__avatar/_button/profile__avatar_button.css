@@ -1,4 +1,4 @@
-.profile__avatar_change-button {
+.profile__avatar_button {
     width: 101%;
     height: 101%;
     background-color: rgba(0, 0, 0, 0.8);
@@ -20,6 +20,6 @@
     padding: 0;
   }
   
-  .profile__avatar_change-button:focus {
+  .profile__avatar_button:focus {
     outline: none;
   }
