@@ -1,36 +1,3 @@
-export const items = [
-  {
-    title: 'Архыз',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    title: 'Кабардино-Балкария',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    title: 'Домбай',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    title: 'Карачаево-Черкессия',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    title: 'Ингушетия',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    title: 'Дагестан',
-    image:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
 export const config = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -44,6 +11,11 @@ export const config = {
 export const cardsList = document.querySelector('.places');
 export const popupProfileForm = document.querySelector('#editProfileForm');
 export const popupCardForm = document.querySelector('#addCardForm');
+export const popupAvatarForm = document.querySelector('#profileAvatar');
+export const popupDeleteCard = document.querySelector('#deletionConfirmation');
+export const popupAvatarOpenButton = document.querySelector(
+  '.profile__avatar_edit-button'
+);
 export const popupProfileOpenButton = document.querySelector(
   '.profile__edit-button'
 );

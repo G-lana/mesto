@@ -1,0 +1,10 @@
+.popup__button_delete-card {
+    margin-top: 38px;
+    margin-bottom: 36px;
+}
+@media screen and (max-width: 618px) {
+    .popup__button_delete-card {
+        margin-top: 35px;
+        margin-bottom: 18px;
+    }
+}
