@@ -14,7 +14,7 @@ export const popupCardForm = document.querySelector('#addCardForm');
 export const popupAvatarForm = document.querySelector('#profileAvatar');
 export const popupDeleteCard = document.querySelector('#deletionConfirmation');
 export const popupAvatarOpenButton = document.querySelector(
-  '.profile__avatar_button'
+  '.profile__avatar-button'
 );
 export const popupProfileOpenButton = document.querySelector(
   '.profile__edit-button'

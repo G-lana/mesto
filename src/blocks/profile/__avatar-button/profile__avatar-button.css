@@ -1,8 +1,8 @@
-.profile__avatar_button {
+.profile__avatar-button {
     width: 101%;
     height: 101%;
     background-color: rgba(0, 0, 0, 0.8);
-    background-image: url(../../../../images/editAvatar.svg);
+    background-image: url(../../../images/editAvatar.svg);
     background-size: 26px;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,6 +20,6 @@
     padding: 0;
   }
   
-  .profile__avatar_button:focus {
+  .profile__avatar-button:focus {
     outline: none;
   }
