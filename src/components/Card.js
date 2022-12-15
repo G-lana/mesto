@@ -45,7 +45,6 @@ export class Card {
   }
   setLikes(newLikes) {
     this._likes = newLikes;
-    this._likeCounter = this._element.querySelector('.place__like-counter');
     this._likeCounter.textContent = this._likes.length;
 
     if (this.isLiked()) {
@@ -72,6 +71,7 @@ export class Card {
     this._likeButton = this._element.querySelector('.place__like');
     this._cardImage = this._element.querySelector('.place__image');
     this._deleteButton = this._element.querySelector('.place__delete');
+    this._likeCounter = this._element.querySelector('.place__like-counter');
     this._setEventListeners();
     this._cardImage.src = this._image;
     this._cardImage.alt = this._title;

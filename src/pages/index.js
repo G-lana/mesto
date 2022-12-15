@@ -21,90 +21,78 @@ import {
 
 let userId;
 
-api
-  .getProfile()
-  .then((res) => {
-    userInfo.setUserInfo(res.name, res.about);
-    userInfo.setUserAvatar(res.avatar);
-    userId = res._id;
-  })
-  .catch((err) => console.log(err));
+Promise.all([api.getProfile(), api.getInitialCards()])
 
-api
-  .getInitialCards()
-  .then((cardList) => {
-    cardList.forEach((data) => {
-      const card = createCard({
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
+    userId = userData._id;
+    renderCards.renderItems(cards);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+const renderCards = new Section(cardsList, {
+  renderer: (data) => {
+    const card = new Card(
+      {
         title: data.name,
         image: data.link,
         likes: data.likes,
         id: data._id,
         userId: userId,
         ownerId: data.owner._id,
-      });
-      cardSection.addItem(card);
-    });
-  })
-  .catch((err) => console.log(err));
+      },
+      '.card-template',
+      handleCardClick,
+      (id) => {
+        confirmPopup.open();
+        confirmPopup.changeSubmitHandler(() => {
+          api
+            .deleteCard(id)
+            .then(() => {
+              card.deleteCard();
+              confirmPopup.close();
+            })
+            .catch((err) => console.log(err));
+        });
+      },
+      (id) => {
+        if (card.isLiked()) {
+          api
+            .deleteLike(id)
+            .then((res) => {
+              card.setLikes(res.likes);
+            })
+            .catch((err) => console.log(err));
+        } else {
+          api
+            .addLike(id)
+            .then((res) => {
+              card.setLikes(res.likes);
+            })
+            .catch((err) => console.log(err));
+        }
+      }
+    );
+    return card.generateCard();
+  },
+});
 
 const popupAddCard = new PopupWithForm('#addCard', (data) => {
   popupAddCard.isLoading(true);
   api
     .addCard(data.title, data.image)
-    .then((res) => {
-      const card = createCard({
-        title: res.name,
-        image: res.link,
-        likes: res.likes,
-        id: res._id,
-        userId: userId,
-        ownerId: res.owner._id,
-      });
-      cardSection.addItem(card);
+    .then((data) => {
+      renderCards.addItem(data);
+      popupAddCard.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
       popupAddCard.isLoading(false);
     });
 });
-
-const createCard = (data) => {
-  const card = new Card(
-    data,
-    '.card-template',
-    handleCardClick,
-    (id) => {
-      confirmPopup.open();
-      confirmPopup.changeSubmitHandler(() => {
-        api
-          .deleteCard(id)
-          .then(() => {
-            card.deleteCard();
-            confirmPopup.close();
-          })
-          .catch((err) => console.log(err));
-      });
-    },
-    (id) => {
-      if (card.isLiked()) {
-        api
-          .deleteLike(id)
-          .then((res) => {
-            card.setLikes(res.likes);
-          })
-          .catch((err) => console.log(err));
-      } else {
-        api
-          .addLike(id)
-          .then((res) => {
-            card.setLikes(res.likes);
-          })
-          .catch((err) => console.log(err));
-      }
-    }
-  );
-  return card.generateCard();
-};
 
 const userInfo = new UserInfo({
   profileName: '.profile__title',
@@ -118,6 +106,7 @@ const popupEditProfile = new PopupWithForm('#editProfile', (data) => {
     .editProfile(data.name, data.job)
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about);
+      popupEditProfile.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -130,6 +119,7 @@ const popupEditAvatar = new PopupWithForm('#profileAvatar', (data) => {
     .editAvatar(data.link)
     .then((res) => {
       userInfo.setUserAvatar(res.avatar);
+      popupEditAvatar.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -174,12 +164,3 @@ const avatarFormValidation = new FormValidator(config, popupAvatarForm);
 profileFormValidation.enableValidation();
 cardFormValidation.enableValidation();
 avatarFormValidation.enableValidation();
-
-const cardSection = new Section(
-  {
-    items: [],
-    renderer: (item) => cardSection.addItem(createCard(item)),
-  },
-  cardsList
-);
-cardSection.renderItems();
